@@ -14,7 +14,16 @@
  // Go to https://hardhat.org/config/ to learn more
  
 const config: HardhatUserConfig = {
-  solidity: "0.8.12",
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.12",
+      },
+      {
+        version:"0.6.0"
+      }
+    ],
+  },
   networks: {
     goerli: {
       url: process.env.PROVIDER_ENDPOINT_GOERLI,
