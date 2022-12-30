@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const Contract = await ethers.getContractFactory("ElevatorExploit");
-  const contract = await Contract.deploy();
+  const Contract = await ethers.getContractFactory("GatekeeperTwoExploit");
+  const contract = await Contract.deploy("0x35fD6578e0c124C34d08249d848ea5E87eA01e26");
 
   await contract.deployed();
   console.log(contract.address)
