@@ -3,7 +3,7 @@ import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("Telephone expolit", function () {
+describe("Telephone", function () {
   it("Should make caller owner", async function () {
 
     const [deployer] = await ethers.getSigners();

@@ -1,17 +1,15 @@
-import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("t1", function () {
-  it("fn", async function () {
+describe("CoinFlip", function () {
+  it("Should make 10 consecutive correct guesses", async function () {
     const CoinFlip = await ethers.getContractFactory("CoinFlip");
     const coinFlip = await CoinFlip.deploy();
     await coinFlip.deployed();
 
     console.log('CoinFlip deployed at:'+ coinFlip.address);
 
-    const Exploit = await ethers.getContractFactory("Exploit");
+    const Exploit = await ethers.getContractFactory("CoinFlipExploit");
     const exploit = await Exploit.deploy(coinFlip.address);
 
     await exploit.deployed();

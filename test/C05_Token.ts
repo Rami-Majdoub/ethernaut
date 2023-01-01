@@ -2,7 +2,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("Token expolit", function () {
+describe("Token", function () {
   it("Should get more tokens", async function () {
 
     // setup

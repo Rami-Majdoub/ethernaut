@@ -1,8 +1,8 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("King Exploit", function () {
-  it("", async function () {
+describe("King", function () {
+  it("Should become the new king and don't let anyone overthrow me", async function () {
     const kingContract = await (
       await ethers.getContractFactory("King")
     ).deploy({ value: ethers.utils.parseEther("0.001") });
