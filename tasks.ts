@@ -13,7 +13,7 @@ task("abi", "prints the ABI of a contract")
     const contractArtifact = await artifacts.readArtifact(contractName)
     const contractFactory = await ethers.getContractFactoryFromArtifact(contractArtifact) as any
 
-    const format = ethers.utils.FormatTypes.full // full minimal json
+    const format = ethers.utils.FormatTypes.json // full minimal json
     const abi = contractFactory.interface.format(format)
     
     console.log(abi);
