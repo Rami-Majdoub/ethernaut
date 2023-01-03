@@ -3,7 +3,9 @@ import { task, types } from "hardhat/config";
 
 task("abi", "prints the ABI of a contract")
   .addParam("contract", "contract path", undefined, types.inputFile, false)
-  .setAction(async ({ contract }, { ethers, artifacts }) => {
+  .setAction(async ({ contract }, { ethers, artifacts, run }) => {
+
+    await run("compile");
 
     // get contract fully qualified name
     const allContracts = await artifacts.getAllFullyQualifiedNames()
@@ -20,25 +22,42 @@ task("abi", "prints the ABI of a contract")
 });
 
 task("deploy", "deploys a contract")
-.addParam("contract", "contract path", undefined, types.inputFile, false)
-//  .addParam("contract", "contract name") // v0
-  .setAction(async ({ contract }, { ethers, artifacts }) => {
-    // v1
-    // get contract fully qualified name
+  .addParam("contract", "contract path", undefined, types.inputFile, false)
+  .addOptionalPositionalParam("arg0", "1st constructor argument")
+  .addOptionalPositionalParam("arg1", "2nd constructor argument")
+  .addOptionalPositionalParam("arg2", "3rd constructor argument")
+  .addOptionalPositionalParam("arg3", "4th constructor argument")
+  .addOptionalPositionalParam("arg4", "5th constructor argument")
+  .setAction(async (
+    { contract, arg0, arg1, arg2, arg3, arg4 },
+    { ethers, artifacts, run }
+  ) => {
+
+    await run("compile");
+
+    const args = arg0 && (
+      arg1 && (
+        arg2 && (
+          arg3 && (
+            arg4 && (
+              [ arg0, arg1, arg2, arg3, arg4 ]
+            ) || [ arg0, arg1, arg2, arg3 ]
+          ) || [ arg0, arg1, arg2 ]
+        ) || [ arg0, arg1 ]
+      ) || [ arg0 ]
+    ) || []
+    
     const allContracts = await artifacts.getAllFullyQualifiedNames()
     const contractName = allContracts.find((e) => e.startsWith(contract)) || ""
     
-    // read contract
-    const contractArtifact = await artifacts.readArtifact(contractName)
-    const contractFactory = await ethers.getContractFactoryFromArtifact(contractArtifact) as any
-
-    // v0
-    //const contractFactory = await ethers.getContractFactory(contract) as any
-
-    // deploy
-    const contractDeployed = await contractFactory.deploy()
+    console.log("Deploy started");
     
-    console.log(`Contract ${contract} deployed at address: `, contractDeployed.address)
+    const contractDeployed = await ethers.deployContract(
+      contractName,
+      args
+    );
+    console.log(`Contract ${contract} deployed at address: `, contractDeployed.address);
+    await contractDeployed.deployTransaction.wait();
 });
 
 task("mnemonic", "Prints a new valid mnemonic to use instead of default one")
