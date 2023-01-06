@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 // import { deployContract } from "@nomiclabs/hardhat-ethers/types";
 
-describe.only("Denial", function () {
+describe("Denial", function () {
   it("Should deny the owner from withdrawing", async function () {
 		// init
 		const [deployer, owner, player] = await ethers.getSigners();
